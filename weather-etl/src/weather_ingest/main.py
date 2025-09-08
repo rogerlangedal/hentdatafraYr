@@ -3,6 +3,7 @@ import time
 from datetime import datetime, timezone
 
 from apscheduler.schedulers.blocking import BlockingScheduler
+from sqlalchemy.exc import OperationalError
 
 from . import met_client, transform
 from .config import settings
@@ -10,17 +11,22 @@ from .db import SessionLocal, engine
 from .models import Base, ForecastPoint, ForecastRaw, Location
 
 
-def ensure_schema():
-    Base.metadata.create_all(bind=engine)
+def ensure_schema(retries: int = 5, delay: int = 1) -> None:
+    for attempt in range(1, retries + 1):
+        try:
+            Base.metadata.create_all(bind=engine)
+            break
+        except OperationalError:
+            if attempt == retries:
+                raise
+            time.sleep(delay)
 
 
 def seed_locations(sess: SessionLocal):
     if sess.query(Location).count() == 0:
         for entry in settings.locations.split(","):
             name, lat, lon, alt = entry.split(":")
-            sess.add(
-                Location(name=name, lat=float(lat), lon=float(lon), altitude_m=int(alt))
-            )
+            sess.add(Location(name=name, lat=float(lat), lon=float(lon), altitude_m=int(alt)))
         sess.commit()
 
 
