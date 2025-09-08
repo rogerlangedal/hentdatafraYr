@@ -63,8 +63,17 @@ def main():
         minute, hour, dom, mon, dow = settings.schedule_cron.split()
         sched = BlockingScheduler()
         sched.add_job(
-            run_once, "cron", minute=minute, hour=hour, day=dom, month=mon, day_of_week=dow
+            run_once,
+            "cron",
+            minute=minute,
+            hour=hour,
+            day=dom,
+            month=mon,
+            day_of_week=dow,
+            misfire_grace_time=60,
         )
+        # Run the job once on startup so the first scheduled run isn't missed
+        run_once()
         sched.start()
     else:
         run_once()
