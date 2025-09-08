@@ -13,7 +13,7 @@ def _build_conn_str() -> str:
     driver = "ODBC Driver 18 for SQL Server"
     base = (
         f"Driver={{{driver}}};Server={settings.db_server};Database={settings.db_database};"
-        "Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+        "Encrypt=yes;TrustServerCertificate=Yes;Connection Timeout=30;"
     )
     return base
 

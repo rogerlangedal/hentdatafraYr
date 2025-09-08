@@ -12,6 +12,8 @@ services:
       retries: 20
 
   app:
+    environment:
+      - DB_SERVER=sql,1433
     build:
       context: ..
       dockerfile: docker/Dockerfile
