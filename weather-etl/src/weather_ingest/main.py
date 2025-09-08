@@ -7,13 +7,14 @@ from sqlalchemy.exc import OperationalError
 
 from . import met_client, transform
 from .config import settings
-from .db import SessionLocal, engine
+from .db import SessionLocal, engine, ensure_database
 from .models import Base, ForecastPoint, ForecastRaw, Location
 
 
 def ensure_schema(retries: int = 5, delay: int = 1) -> None:
     for attempt in range(1, retries + 1):
         try:
+            ensure_database()
             Base.metadata.create_all(bind=engine)
             break
         except OperationalError:
