@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Format",
+      "type": "shell",
+      "command": "make fmt",
+      "options": { "cwd": "${workspaceFolder}/weather-etl" },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Test",
+      "type": "shell",
+      "command": "make test",
+      "options": { "cwd": "${workspaceFolder}/weather-etl" },
+      "group": "test",
+      "problemMatcher": []
+    }
+  ]
+}

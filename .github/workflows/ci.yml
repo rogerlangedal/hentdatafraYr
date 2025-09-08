@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: weather-etl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install .
+          pip install pytest black ruff
+      - name: Lint
+        run: |
+          ruff check .
+          black --check .
+      - name: Test
+        env:
+          MET_USER_AGENT: ci-test/0.1
+          LOCATIONS: Test:0:0:0
+          DB_SERVER: localhost,1433
+          DB_DATABASE: weather
+        run: pytest -q
