@@ -1,10 +1,12 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from .config import settings
-import pyodbc
 import struct
 import urllib.parse
+
+import pyodbc
 from azure.identity import DefaultAzureCredential
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from .config import settings
 
 
 def _build_conn_str() -> str:
