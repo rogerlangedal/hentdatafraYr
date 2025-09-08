@@ -2,20 +2,48 @@
 
 Minimal Python ETL that fetches weather forecasts from MET (api.met.no) and stores both raw JSON and flattened point data in SQL (Azure SQL-compatible). Local dev uses Docker Compose.
 
-## Quick start (local)
+## Setup
+
+### Docker
 1. Copy env file:
    ```bash
    cp .env.example .env
-```
+   ```
 
-Set a strong `SA_PASSWORD` if you change it in compose.
+   Set a strong `SA_PASSWORD` if you change it in compose.
 2. Start services:
 
-```bash
-docker compose -f docker/docker-compose.yml up --build
-```
+   ```bash
+   docker compose -f docker/docker-compose.yml up --build
+   ```
 
 3. The app will create schema and fetch for the configured `LOCATIONS`. Check logs and connect to SQL on `localhost,1433` (db `weather`).
+
+### WSL
+Windows users can run the project inside [Windows Subsystem for Linux](https://learn.microsoft.com/windows/wsl/) (WSL 2).
+From a WSL shell:
+
+1. Create a virtual environment and install dependencies:
+
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -e .
+   ```
+
+2. Copy env file and configure values:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Run the ETL or other Makefile tasks:
+
+   ```bash
+   python -m weather_ingest.main
+   ```
+
+Docker Desktop with the WSL 2 backend is also supported; follow the Docker steps above within your WSL environment.
 
 ## Notes
 
