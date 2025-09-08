@@ -1,0 +1,14 @@
+# Identify your app + contact as required by MET (api.met.no)
+MET_USER_AGENT="bir-weather-etl/0.1 roger@bir.no"
+# Comma-separated: name:lat:lon:altitude
+LOCATIONS="Bergen:60.392:5.324:12,Oslo:59.913:10.752:23"
+
+# Local SQL Server container
+DB_SERVER="localhost,1433"
+DB_DATABASE="weather"
+DB_USER="sa"
+DB_PASSWORD="Your_strong_Passw0rd!"
+USE_MI=false
+
+# Cron for APScheduler (default: every 30 minutes)
+SCHEDULE_CRON="*/30 * * * *"
