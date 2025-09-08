@@ -1,5 +1,6 @@
-import httpx
 import backoff
+import httpx
+
 from .config import settings
 
 BASE = "https://api.met.no/weatherapi/locationforecast/2.0/compact"
