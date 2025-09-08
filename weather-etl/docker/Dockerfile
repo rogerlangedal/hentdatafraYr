@@ -1,4 +1,5 @@
-FROM python:3.11-slim
+# Use the full Debian-based Python image to ensure apt-get is available
+FROM python:3.11
 
 # System deps + Microsoft repo for msodbcsql18
 RUN apt-get update \
