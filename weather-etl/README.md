@@ -28,3 +28,20 @@ docker compose -f docker/docker-compose.yml up --build
 ```bash
 pytest -q
 ```
+
+## Development
+
+Format and test the code before committing:
+
+```bash
+make fmt
+make test
+```
+
+The repository includes VS Code tasks for these commands. Open the command
+palette and run **Tasks: Run Task** to execute them.
+
+## CI
+
+GitHub Actions runs linting and tests on each push and pull request. The
+workflow definition lives in `.github/workflows/ci.yml`.
