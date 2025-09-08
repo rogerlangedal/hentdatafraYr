@@ -1,0 +1,30 @@
+# weather-etl
+
+Minimal Python ETL that fetches weather forecasts from MET (api.met.no) and stores both raw JSON and flattened point data in SQL (Azure SQL-compatible). Local dev uses Docker Compose.
+
+## Quick start (local)
+1. Copy env file:
+   ```bash
+   cp .env.example .env
+```
+
+Set a strong `SA_PASSWORD` if you change it in compose.
+2. Start services:
+
+```bash
+docker compose -f docker/docker-compose.yml up --build
+```
+
+3. The app will create schema and fetch for the configured `LOCATIONS`. Check logs and connect to SQL on `localhost,1433` (db `weather`).
+
+## Notes
+
+* **User-Agent** must identify your app + contact per MET terms.
+* The client uses `If-Modified-Since` to reduce calls; respect rate limits.
+* In Azure, prefer passwordless with Managed Identity (set `USE_MI=true`).
+
+## Tests
+
+```bash
+pytest -q
+```
